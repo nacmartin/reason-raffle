@@ -5,9 +5,14 @@ type person = {
 
 let component = ReasonReact.statelessComponent("Person");
 
-let getBg = (selected: bool) => selected ? "#f00" : "#0f0";
+let getBg = (selected: bool, inRaffle: bool) =>
+  if (selected) {
+    if (inRaffle) {"#f00"} else {"#00f"};
+  } else {
+    "#0f0";
+  };
 
-let make = (~person: person, ~selected: bool, _children) => {
+let make = (~person: person, ~selected: bool, ~inRaffle: bool, _children) => {
   ...component,
   render: _self =>
     <div
@@ -15,7 +20,7 @@ let make = (~person: person, ~selected: bool, _children) => {
         ReactDOMRe.Style.make(
           ~color="#444444",
           ~fontSize="68px",
-          ~backgroundColor=getBg(selected),
+          ~backgroundColor=getBg(selected, inRaffle),
           ()
         )
       )>
